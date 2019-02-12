@@ -11,7 +11,8 @@ dependencies {
 
     // Spanner-Hibernate testing deps
     compile files("$rootProject.projectDir/libs/CloudSpannerJDBC42.jar")
-    testCompile "com.google.cloud:google-cloud-spanner-hibernate:0.1.0-SNAPSHOT"
+    testCompile "our-team:spanner-hibernate-comparison:1.0-SNAPSHOT"
+    testCompile "com.google.cloud:google-cloud-spanner:0.66.1-beta-SNAPSHOT"
 
     compile( libraries.jpa )
     compile( project( ':hibernate-core' ) )

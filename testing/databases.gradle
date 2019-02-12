@@ -3,7 +3,7 @@ ext {
         db = 'spanner'
         dbBundle = [
                 spanner : [
-                        'db.dialect' : 'com.google.cloud.spanner.hibernate.SpannerDialect',
+                        'db.dialect' : 'knut.dialect.CloudSpannerDialect',
                         'jdbc.driver' : 'com.simba.cloudspanner.core.jdbc42.CloudSpanner42Driver',
                         'jdbc.user' : '',
                         'jdbc.pass' : '',
