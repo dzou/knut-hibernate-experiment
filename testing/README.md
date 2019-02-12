@@ -18,17 +18,19 @@ local maven in order to facilitate testing, so it will allow you to test local c
     Python 3.5.4rc1 
     ```
 
-2. Modify `databases.gradle` to include the correct JDBC URL to connect to your Spanner instance.
-You will need to specify the correct GCP project ID, Spanner instance, and table.
+2. Run `python3 run-tests.py <INSERT APPROPRIATE FLAGS>`.
 
-    Example: 
-    
-    ```
-    'jdbc.url' : 'jdbc:cloudspanner://;Project=gcp_project_id;Instance=spanner_instance_name;Database=my_db'
-    ```
-
-3. Run `python3 run-tests.py`. Note that the script will run all the integration tests in the
-directory. It is likely you may want to run a specific test for debugging; this can be done
-by modifying the script and filtering the tests using `--tests` in the Gradle command.
-
-    Example: `hibernate-orm/gradlew test -p hibernate-orm/documentation --tests <TEST_NAME>`
+   Note: The script allows you to modify run with the following flags:
+   
+   - `--jdbc_url`: (**Required**) Set the JDBC URL to connect to the Spanner instance.
+     An example JDBC URL is provided in the script.
+   
+     JDBC URL will be in the form: `jdbc:cloudspanner://;Project=gcp_project_id;Instance=spanner_instance_name;Database=my_db`
+     
+   - `--dialect_class`: (Optional) Set the Hibernate dialect class to use.
+   
+   - `--driver_class`: (Optional) Set the JDBC driver class to use.
+   
+   - `--test_filter`: (Optional) Set the test filter to use.
+  
+   A reasonable set of defaults are provided for you; please take a look at `run-tests.py` to see the default flag values.
