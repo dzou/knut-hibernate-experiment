@@ -53,8 +53,8 @@ Hibernate Dialect fully-qualified classname:
 - Ours: `com.google.cloud.spanner.hibernate.SpannerDialect`
 - Knut: `knut.dialect.CloudSpannerDialect`
 
-Knut's JDBC driver is potentially broken... Or atleast he has offered no good way of building a jar of it.
-I attempted to build a jar of it from source and obtained this error; looks like a diamond dependency issue:
+So far I have been unable to find a reliable way to build Knut's JDBC driver as JAR.
+I attempted to build a jar of it from source and obtained this error - looks like a diamond dependency issue:
 
 ```
 org.hibernate.testing.junit4.CallbackException: org.hibernate.testing.junit4.BaseCoreFunctionalTestCase#buildSessionFactory
@@ -66,3 +66,6 @@ Caused by: java.lang.NoSuchMethodError: io.grpc.netty.shaded.io.grpc.netty.Netty
     at com.google.cloud.spanner.SpannerOptions.createChannel(SpannerOptions.java:272)
     at com.google.cloud.spanner.SpannerOptions.createChannels(SpannerOptions.java:259)
 ```
+
+Shaded jar is built from sources in the private google repo using [this Maven profile](https://github.com/googleapis/google-cloud-java-private/blob/spanner-hibernate-support/google-cloud-clients/google-cloud-spanner/pom.xml#L115).
+
