@@ -28,8 +28,9 @@ if not os.path.isdir('hibernate-orm/libs') or \
 # Patch the hibernate-orm repo with custom Gradle files for testing
 subprocess.run('cp databases.gradle hibernate-orm/gradle/databases.gradle', shell=True)
 subprocess.run('cp documentation.gradle hibernate-orm/documentation/documentation.gradle', shell=True)
+subprocess.run('cp ../lib/knut-jdbc-shaded.jar hibernate-orm/libs/knut-jdbc-shaded.jar', shell=True)
 
 # Run some tests.
 # Modify this to filter down to a different test with --tests TEST_NAME
-subprocess.run('hibernate-orm/gradlew clean test -p hibernate-orm/documentation --tests SQLTest', shell=True)
+subprocess.run('hibernate-orm/gradlew clean test -p hibernate-orm/documentation --tests TuplizerTest', shell=True)
 subprocess.run('google-chrome hibernate-orm/documentation/target/reports/tests/test/index.html', shell=True)
