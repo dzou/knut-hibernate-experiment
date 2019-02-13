@@ -33,9 +33,9 @@ local maven in order to facilitate testing, so it will allow you to test local c
      
      - Knut: `jdbc:cloudspanner:/projects/my-project/instances/my-instance/databases/my-database`
      
-   - `--dialect_class`: (Optional) Set the Hibernate dialect class to use.
+   - `--dialect_class`: (Optional) Set the Hibernate dialect class to use. Options: `{knut, ours}`
    
-   - `--driver_class`: (Optional) Set the JDBC driver class to use.
+   - `--driver_class`: (Optional) Set the JDBC driver class to use. Options: `{knut, simba}`
    
    - `--test_filter`: (Optional) Set the test filter to use.
   
@@ -53,19 +53,5 @@ Hibernate Dialect fully-qualified classname:
 - Ours: `com.google.cloud.spanner.hibernate.SpannerDialect`
 - Knut: `knut.dialect.CloudSpannerDialect`
 
-So far I have been unable to find a reliable way to build Knut's JDBC driver as JAR.
-I attempted to build a jar of it from source and obtained this error - looks like a diamond dependency issue:
-
-```
-org.hibernate.testing.junit4.CallbackException: org.hibernate.testing.junit4.BaseCoreFunctionalTestCase#buildSessionFactory
-    at org.hibernate.testing.junit4.TestClassMetadata.performCallbackInvocation(TestClassMetadata.java:208)
-    at org.hibernate.testing.junit4.TestClassMetadata.invokeCallback(TestClassMetadata.java:192)
-...
-Caused by: java.lang.NoSuchMethodError: io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder.intercept(Ljava/util/List;)Lio/grpc/internal/AbstractManagedChannelImplBuilder;
-    at com.google.cloud.spanner.SpannerOptions$NettyRpcChannelFactory.newChannel(SpannerOptions.java:300)
-    at com.google.cloud.spanner.SpannerOptions.createChannel(SpannerOptions.java:272)
-    at com.google.cloud.spanner.SpannerOptions.createChannels(SpannerOptions.java:259)
-```
-
-Shaded jar is built from sources in the private google repo using [this Maven profile](https://github.com/googleapis/google-cloud-java-private/blob/spanner-hibernate-support/google-cloud-clients/google-cloud-spanner/pom.xml#L115).
+Shaded Knut JDBC jar is built from sources in the private google repo using [this Maven profile](https://github.com/googleapis/google-cloud-java-private/blob/spanner-hibernate-support/google-cloud-clients/google-cloud-spanner/pom.xml#L115).
 

@@ -1,17 +1,32 @@
+DATABASE_GRADLE_TEMPLATE = """
+ext {{
+        db = 'spanner'
+        dbBundle = [
+                spanner : [
+                        'db.dialect' : '{dialect_class}',
+                        'jdbc.driver' : '{driver_class}',
+                        'jdbc.user' : '',
+                        'jdbc.pass' : '',
+                        'jdbc.url' : '{jdbc_url}',
+                ],
+        ]
+}}
+"""
+
+DOCUMENTATION_GRADLE_TEMPLATE = """
 apply from: rootProject.file( 'gradle/java-module.gradle' )
 
 apply plugin: 'hibernate-matrix-testing'
 
-repositories {
+repositories {{
     mavenLocal()
-}
+}}
 
-dependencies {
+dependencies {{
     ext.pressgangVersion = '3.0.0'
 
     // Spanner-Hibernate testing deps
-    compile files("$rootProject.projectDir/libs/CloudSpannerJDBC42.jar")
-    compile files("$rootProject.projectDir/libs/knut-jdbc-shaded.jar")
+    compile files("$rootProject.projectDir/libs/{jdbc_jar}")
     testCompile "our-team:spanner-hibernate-comparison:1.0-SNAPSHOT"
 
     compile( libraries.jpa )
@@ -33,10 +48,11 @@ dependencies {
 
     testCompile( project( ':hibernate-jcache' ) )
     testRuntime( libraries.ehcache3 )
-}
+}}
 
 // Not used; needed because this task is referenced in other gradle files.
-task buildDocsForPublishing {
+task buildDocsForPublishing {{
     group 'Documentation'
     description 'Grouping task for building all documentation for publishing (release)'
-}
+}}
+"""
